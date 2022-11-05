@@ -1,0 +1,129 @@
+﻿@model IEnumerable<BLL.Models.Employee.EmployeeViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+
+    <div class="alert p-2 mt-3 pl-4 noti" style="display: none;" role="alert">
+        Thông báo
+    </div>
+    <div class="row mt-4 mb-3">
+        <div class="col">
+            <p style="font-size: 25px;">Manage <b>Employees</b></p>
+        </div>
+        <div class="col text-right">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate"><i class="bi bi-plus-circle"></i> Add new employee</button>
+        </div>
+    </div>
+    <hr>
+    <div class="table-responsive">
+        <table class="table" id="table_id">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyEmp">
+                @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger btnDel" data-toggle="modal" data-target="#modalDelete" data-id="@item.Id">
+                            <i class="bi bi-trash2-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Delete-->
+<div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure want to delete this employee's: <span class="text-danger" id="empNameDel"></span>
+        <p class="text-warning">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="btnConfirmDel" data-dismiss="modal" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete-->
+<div class="modal fade" id="modalCreate" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="frmCreate">
+          <div class="modal-body">
+              <div class="alert noti" style="display: none;" role="alert">
+                Thông báo
+              </div>
+              <div class="form-group">
+                <label for="inputName">Name: *</label>
+                <input type="text" class="form-control" id="inputName" placeholder="Full name" name="Name" minlength="5" maxlength="50" required>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail">Email: *</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com" minlength="5" maxlength="50" name="Email" required>
+              </div>
+              <div class="form-group">
+                <label for="inputPhone">Phone: *</label>
+                <input type="tel" class="form-control" id="inputPhone" placeholder="0123456789" name="Phone" pattern="^\d{10}$" title="Only number" minlength="10" maxlength="10" required>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">Address: *</label>
+                <textarea class="form-control" id="inputAddress" rows="3" name="Address" minlength="5" maxlength="255" required></textarea>
+              </div>
+              <small>Fields marked with * are required.</small>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="reset" class="btn btn-secondary">Clear</button>
+            <button type="submit" id="btnCreate" class="btn btn-primary">Create</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
